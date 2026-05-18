@@ -45,7 +45,7 @@
         </div>
         <div class="col-6">
             <div class="input-group">
-                <input type="text"  class="from-control" bind:value="{kw}">
+                <input type="text"  class="form-control" bind:value="{kw}">
                 <button class="btn btn-outline-secondary" on:click={() => {$keyword= kw, $page=0}}>
                   찾기
                 </button>
