@@ -3,10 +3,15 @@
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from starlette.config import Config
+
 # 비동기 디비
 #from sqlalchemy.ext.asyncio import create_async_engine, async_session, AsyncSession
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./myapi.db"
+config =  Config('.env')
+SQLALCHEMY_DATABASE_URL = config('SQLALCHEMY_DATABASE_URL')
+
+#SQLALCHEMY_DATABASE_URL = "sqlite:///./myapi.db"
 
 #동기 디비
 engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
