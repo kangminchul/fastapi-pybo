@@ -42,6 +42,7 @@ const fastapi = (operation, url, params, success_callback, failure_callback) => 
                 if(success_callback) {
                     success_callback()
                 }
+                return
             }
             response.json()
                 .then(json => {
