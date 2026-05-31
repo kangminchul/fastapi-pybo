@@ -28,7 +28,9 @@ router = APIRouter(
 
 @router.post("/openapi", response_model=openapi_schema.OpenAPISchema)
 def openapi_question( param:openapi_schema.OpenAPIParamSchema, db: Session = Depends(get_db)):
+    print("param.type:" + param.type)
     if param.type == 'NQ':
+        print("NQ:" + param.content)
         response = client.responses.create(
             model="gpt-4o",
             instructions="요청한 문장을 영어로 번역 해줘. 그리고 영어 문장만 답해 줘.",
@@ -41,6 +43,9 @@ def openapi_question( param:openapi_schema.OpenAPIParamSchema, db: Session = Dep
         )
         answer = response.output[0].content[0].text
         print(response.output_text)
+        return {
+            "openapi": answer
+        }
     elif param.type == 'VQB':
         response  = client.responses.create(
             model="gpt-4o",
