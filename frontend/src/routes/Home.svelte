@@ -3,8 +3,8 @@
     import {link} from 'svelte-spa-router'
     import {page, keyword, is_login} from "../lib/store"
     import moment from 'moment/min/moment-with-locales'
-    moment.locale('ko')
 
+    moment.locale('ko')
 
     let size = 10
     let total = 0
@@ -13,6 +13,8 @@
 
 
     let question_list = []
+
+    
 
     function get_question_list(){
         let params = {
@@ -41,6 +43,7 @@
 <div class="container my-3">
     <div class="row my3">
         <div class="col-6">
+            <a use:link href="/open-api"  class="btn btn-primary">OpenAPI</a>
             <a use:link href="/question-create"  class="btn btn-primary {$is_login ? '' : 'disabled'}">질문 등록하기</a>
         </div>
         <div class="col-6">

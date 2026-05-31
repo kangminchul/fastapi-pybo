@@ -13,8 +13,12 @@ from domain.user import user_crud, user_schema
 from domain.user.user_crud import pwd_context
 from starlette.config import Config
 
+
 #ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
 #SECRET_KEY = "6535ea813f7e3681fc0fbce5d57c9458290b6b45d1b5fefac123e0e605509493"
+
+
+
 
 config = Config(".env")
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
@@ -34,6 +38,8 @@ def user_create(_user_create:user_schema.UserCreateSchema, db: Session = Depends
     if user:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="이미 존재하는 사용자입니다.")
     user_crud.create_user(db=db, user=_user_create)
+
+
 
 @router.post("/login", response_model=user_schema.TokenSchema)
 def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(),

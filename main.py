@@ -9,6 +9,7 @@ from starlette.staticfiles import StaticFiles
 from domain.answer import  answer_router
 from domain.question import question_router
 from domain.user import user_router
+from domain.ai import  openapi_router
 
 app = FastAPI()
 
@@ -33,6 +34,18 @@ logging.basicConfig(level=logging.DEBUG)
 app.include_router(question_router.router)
 app.include_router(answer_router.router)
 app.include_router(user_router.router)
+app.include_router(openapi_router.router)
+
+
+@app.get("/items/{item_id}")
+async def read_item(item_id : int):
+    return {"item_id": item_id}
+
+fake_items_db = [{"item_name": "Foo"}, {"item_name": "Bar"}, {"item_name": "Baz"}]
+@app.get("/items_get/")
+async def read_item_get(skip: int = 0, limit: int = 10):
+    return fake_items_db[skip : skip + limit]
+
 app.mount("/assets", StaticFiles(directory="frontend/dist/assets") )
 #app.mount("/assets", StaticFiles(directory="frontend/dist/assets"), name="assets")
 @app.get("/")
