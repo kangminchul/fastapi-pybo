@@ -29,32 +29,46 @@ router = APIRouter(
 )
 
 
+def generate_response_from_openai(query: str) -> str:
+    response = client.responses.create(
+        model="gpt-4o",
+        input=[
+            {
+                "role": "user",
+                "content": query
+            }
+        ]
+    )
+    return response.output_text
+
+
 @router.post("/kakao")
 async def kakao(request: Request):
     print("req_data:" )
     try:
         req_data = await request.json()
+        query = req_data['userRequest']['utterance']
+        if not query:
+            raise HTTPException(status_code=400, detail="Query is missing")
+        content = generate_response_from_openai(query)
 #        logger.info("req_data:" + req_data)
 #        print("req_data:" + req_data )
-    except Exception:
-        raise HTTPException(
-            status_code=400,
-            detail="JSON 데이터가 없습니다."
-        )
-    #utterance =  req_data['userRequest']['utterance']
-    logger.info(f"request={req_data}")
-    return {
-        "version": "2.0",
-        "template": {
-            "outputs": [
-                {
-                    "simpleText": {
-                        "text": "안녕하세요!"
+    except Exception as e:
+        logger.info(f"kakao error ={str(e)}")
+        return {
+            "version": "2.0",
+            "template": {
+                "outputs": [
+                    {
+                        "simpleText": {
+                            "text": f"Error: {str(e)}"
+                        }
                     }
-                }
-            ]
+                ]
+            }
         }
-    }
+
+
 #    return {"content": "안녕"}
 
 
