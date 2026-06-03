@@ -51,6 +51,18 @@ async def kakao(request: Request):
         if not query:
             raise HTTPException(status_code=400, detail="Query is missing")
         content = generate_response_from_openai(query)
+        return {
+            "version": "2.0",
+            "template": {
+                "outputs": [
+                    {
+                        "simpleText": {
+                            "text": content
+                        }
+                    }
+                ]
+            }
+        }
 #        logger.info("req_data:" + req_data)
 #        print("req_data:" + req_data )
     except Exception as e:
