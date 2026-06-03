@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 from sqlalchemy.orm import Session
 from domain.ai import  openapi_schema
 
@@ -24,6 +24,18 @@ router = APIRouter(
 )
 
 
+@router.post("/kakao")
+async def basic(request: Request):
+    try:
+        req_data = await request.json()
+    except Exception:
+        raise HTTPException(
+            status_code=400,
+            detail="JSON 데이터가 없습니다."
+        )
+    #utterance =  req_data['userRequest']['utterance']
+    print(req_data)
+    return {"content": "안녕"}
 
 
 @router.post("/openapi", response_model=openapi_schema.OpenAPISchema)
