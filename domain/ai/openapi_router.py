@@ -8,6 +8,7 @@ from openai import OpenAI
 from database import get_db
 import base64
 import logging
+from rich import print as rprint
 
 
 load_dotenv()
@@ -31,10 +32,11 @@ router = APIRouter(
 
 @router.post("/kakao")
 async def kakao(request: Request):
-    logger.info(f"+++++++++++ 데이터가 안 찍힌다고 ")
-    print("데이터야 찍혀라" )
+
     try:
         req_data = await request.json()
+        logger.info("req_data:" + req_data)
+        print("req_data:" + req_data )
     except Exception:
         raise HTTPException(
             status_code=400,
