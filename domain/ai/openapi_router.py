@@ -42,7 +42,19 @@ async def kakao(request: Request):
         )
     #utterance =  req_data['userRequest']['utterance']
     logger.info(f"request={req_data}")
-    return {"content": "안녕"}
+    return {
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+                    "simpleText": {
+                        "text": "안녕하세요!"
+                    }
+                }
+            ]
+        }
+    }
+#    return {"content": "안녕"}
 
 
 @router.post("/openapi", response_model=openapi_schema.OpenAPISchema)
