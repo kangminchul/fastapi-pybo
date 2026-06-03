@@ -7,9 +7,14 @@ from dotenv import load_dotenv
 from openai import OpenAI
 from database import get_db
 import base64
+import logging
+
 
 load_dotenv()
 client = OpenAI()
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 def encode_image(image_path):
@@ -25,7 +30,9 @@ router = APIRouter(
 
 
 @router.post("/kakao")
-async def basic(request: Request):
+async def kakao(request: Request):
+    logger.info(f"+++++++++++ 데이터가 안 찍힌다고 ")
+    print("데이터야 찍혀라" )
     try:
         req_data = await request.json()
     except Exception:
@@ -34,7 +41,7 @@ async def basic(request: Request):
             detail="JSON 데이터가 없습니다."
         )
     #utterance =  req_data['userRequest']['utterance']
-    print(req_data)
+    logger.info(f"request={req_data}")
     return {"content": "안녕"}
 
 
