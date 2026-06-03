@@ -10,6 +10,12 @@ from domain.answer import  answer_router
 from domain.question import question_router
 from domain.user import user_router
 from domain.ai import  openapi_router
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(name)s - %(message)s"
+)
 
 app = FastAPI()
 
